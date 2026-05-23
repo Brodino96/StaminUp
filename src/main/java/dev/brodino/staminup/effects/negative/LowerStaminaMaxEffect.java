@@ -3,9 +3,9 @@ package dev.brodino.staminup.effects.negative;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 
-public class StaminaDrainEffect extends StatusEffect {
+public class LowerStaminaMaxEffect extends StatusEffect {
 
-    public StaminaDrainEffect(StatusEffectCategory statusEffectCategory, int color) {
+    public LowerStaminaMaxEffect(StatusEffectCategory statusEffectCategory, int color) {
         super(statusEffectCategory, color);
     }
 }
