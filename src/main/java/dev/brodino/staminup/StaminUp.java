@@ -36,7 +36,7 @@ public class StaminUp implements ModInitializer {
             PLAYERS.put(uuid, CONFIG.getData().getMaxStamina());
             return true;
         }
-        return PLAYERS.get(uuid) > CONFIG.getData().getJumpCost();
+        return PLAYERS.get(uuid) >= CONFIG.getData().getJumpCost();
     }
 
     public static void updateStamina(ServerPlayerEntity player, int newStamina) {

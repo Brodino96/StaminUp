@@ -17,6 +17,7 @@ public class PlayerEntityMixin {
     public void jump(CallbackInfo ci) {
         if (!StaminUpClient.canJump()) {
             ci.cancel();
+            return;
         }
 
         StaminUpClient.stamina -= StaminUpClient.jumpConsumption;
