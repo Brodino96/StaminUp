@@ -1,6 +1,5 @@
 package dev.brodino.staminup.client;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
@@ -23,7 +22,7 @@ public class StaminaHud {
     public static void register() { HudRenderCallback.EVENT.register(StaminaHud::render); }
 
     private static void render(MatrixStack matrices, float tickDelta) {
-        int maxStamina = StaminUpClient.maxStamina;
+        float maxStamina = StaminUpClient.maxStamina;
         if (maxStamina <= 0) {
             return;
         }
@@ -41,8 +40,8 @@ public class StaminaHud {
 
         DrawableHelper.fill(matrices, barX, barY, barX + BAR_WIDTH, barY + BAR_HEIGHT, COLOR_BACKGROUND);
 
-        int stamina = Math.max(0, Math.min(StaminUpClient.stamina, maxStamina));
-        int fillHeight = BAR_HEIGHT * stamina / maxStamina;
+        float stamina = Math.max(0f, Math.min(StaminUpClient.stamina, maxStamina));
+        int fillHeight = Math.round(BAR_HEIGHT * stamina / maxStamina);
         if (fillHeight <= 0) {
             return;
         }

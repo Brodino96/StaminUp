@@ -7,9 +7,9 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 
 public class StaminUpClient implements ClientModInitializer {
 
-    public static int stamina = 0;
-    public static int jumpConsumption = 0;
-    public static int maxStamina;
+    public static float stamina = 0;
+    public static float jumpConsumption = 0;
+    public static float maxStamina;
 
     @Override
     public void onInitializeClient() {
@@ -20,17 +20,17 @@ public class StaminUpClient implements ClientModInitializer {
 
     private void registerEvents() {
         ClientPlayNetworking.registerGlobalReceiver(StaminUpPackets.UPDATE_STAMINA, (c, cpnh, buf, ps) -> {
-            stamina = buf.readInt();
+            stamina = buf.readFloat();
             StaminUp.LOGGER.info("New stamina {}", stamina);
         });
 
-        ClientPlayNetworking.registerGlobalReceiver(StaminUpPackets.JUMP_CONSUMPTION, (c, cpnh, buf, ps) -> {
-            jumpConsumption = buf.readInt();
+        ClientPlayNetworking.registerGlobalReceiver(StaminUpPackets.UPDATE_JUMP_CONSUMPTION, (c, cpnh, buf, ps) -> {
+            jumpConsumption = buf.readFloat();
             StaminUp.LOGGER.info("New jumpConsumption {}", jumpConsumption);
         });
 
-        ClientPlayNetworking.registerGlobalReceiver(StaminUpPackets.MAX_STAMINA, (c, cpnh, buf, ps) -> {
-            maxStamina = buf.readInt();
+        ClientPlayNetworking.registerGlobalReceiver(StaminUpPackets.UPDATE_MAX_STAMINA, (c, cpnh, buf, ps) -> {
+            maxStamina = buf.readFloat();
             StaminUp.LOGGER.info("New maxStamina {}", maxStamina);
         });
     }

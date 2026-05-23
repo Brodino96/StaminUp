@@ -67,12 +67,12 @@ public class Config {
     public Config.Type getData() { return this.data; }
 
     public static class Type {
-        int maxStamina = 100;
-        int staminaRecovery = 5;
-        int jumpCost = 10;
+        float maxStamina = 100;
+        float staminaRecovery = 5;
+        float jumpCost = 10;
 
-        public int getMaxStamina() { return this.maxStamina; }
-        public int getStaminaRecovery() { return this.staminaRecovery; }
-        public int getJumpCost() { return this.jumpCost; }
+        public float getMaxStamina() { return this.maxStamina; }
+        public float getStaminaRecovery() { return this.staminaRecovery; }
+        public float getJumpCost() { return this.jumpCost; }
     }
 }

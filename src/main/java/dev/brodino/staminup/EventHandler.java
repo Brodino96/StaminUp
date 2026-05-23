@@ -21,18 +21,18 @@ public class EventHandler {
         });
 
         ServerTickEvents.END_SERVER_TICK.register((server -> {
-            StaminUp.tick();
+            StaminaHandler.tick();
         }));
 
         ServerPlayConnectionEvents.JOIN.register(((handler, sender, server) -> {
             var jumpConsumption = PacketByteBufs.create();
-            jumpConsumption.writeInt(StaminUp.CONFIG.getData().getJumpCost());
-            ServerPlayNetworking.send(handler.getPlayer(), StaminUpPackets.JUMP_CONSUMPTION, jumpConsumption);
+            jumpConsumption.writeFloat(StaminUp.CONFIG.getData().getJumpCost());
+            ServerPlayNetworking.send(handler.getPlayer(), StaminUpPackets.UPDATE_JUMP_CONSUMPTION, jumpConsumption);
 
             var maxStamina = PacketByteBufs.create();
-            maxStamina.writeInt(StaminUp.CONFIG.getData().getMaxStamina());
+            maxStamina.writeFloat(StaminUp.CONFIG.getData().getMaxStamina());
             ServerPlayNetworking.send(handler.getPlayer(), StaminUpPackets.UPDATE_STAMINA, maxStamina);
-            ServerPlayNetworking.send(handler.getPlayer(), StaminUpPackets.MAX_STAMINA, maxStamina);
+            ServerPlayNetworking.send(handler.getPlayer(), StaminUpPackets.UPDATE_MAX_STAMINA, maxStamina);
         }));
     }
 }

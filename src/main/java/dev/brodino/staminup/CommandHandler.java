@@ -23,9 +23,6 @@ public class CommandHandler {
 
     private static LiteralArgumentBuilder<ServerCommandSource> getReloadCommand() {
         return CommandManager.literal("reloadConfig")
-            .executes(context -> {
-                return StaminUp.CONFIG.reload() ? 1 : 0;
-            }
-        );
+            .executes(context -> StaminUp.CONFIG.reload() ? 1 : 0);
     }
 }

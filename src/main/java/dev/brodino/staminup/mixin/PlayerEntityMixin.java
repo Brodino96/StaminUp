@@ -1,6 +1,7 @@
 package dev.brodino.staminup.mixin;
 
 import dev.brodino.staminup.StaminUp;
+import dev.brodino.staminup.StaminaHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,17 +19,13 @@ public class PlayerEntityMixin {
     @Environment(EnvType.SERVER)
     @Inject(method = "jump", at = @At("HEAD"), cancellable = true)
     public void jump(CallbackInfo ci) {
-        PlayerEntity player = (PlayerEntity) (Object) this;
+        PlayerEntity p = (PlayerEntity) (Object) this;
+        ServerPlayerEntity player = (ServerPlayerEntity) (Object) p;
 
-        UUID uuid = player.getUuid();
-        if (!StaminUp.canJump(uuid)) {
-            StaminUp.LOGGER.info("{} can't jump", player.getName().getString());
+        boolean jumped = StaminaHandler.tryJump(player);
+        if (!jumped) {
             ci.cancel();
             return;
         }
-
-        StaminUp.LOGGER.info("{} just jumped", player.getName().getString());
-        int newStamina = StaminUp.PLAYERS.getOrDefault(player.getUuid(), StaminUp.CONFIG.getData().getMaxStamina()) - StaminUp.CONFIG.getData().getJumpCost();
-        StaminUp.updateStamina((ServerPlayerEntity) (Object) player, newStamina);
     }
 }
