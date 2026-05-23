@@ -1,0 +1,78 @@
+package dev.brodino.staminup;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.slf4j.Logger;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+public class Config {
+
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+
+    private Path configPath;
+    private Config.Type data;
+
+    public Config(String modId, Logger logger) {
+        Path dataDirectory = Path.of("config");
+
+        try {
+            if (!Files.exists(dataDirectory)) {
+                Files.createDirectories(dataDirectory);
+            }
+            this.configPath = dataDirectory.resolve(modId + ".json");
+            this.load();
+        } catch (IOException e) {
+            logger.error("Failed to load {}.json", modId);
+        }
+    }
+
+    private void load() throws IOException {
+        if (!Files.exists(this.configPath)) {
+            this.data = this.getDefaults();
+            this.save();
+            return;
+        }
+
+        try (Reader reader = Files.newBufferedReader(this.configPath)) {
+            this.data = GSON.fromJson(reader, Config.Type.class);
+            if (data == null) {
+                this.data = this.getDefaults();
+                this.save();
+            }
+        }
+    }
+
+    public boolean reload() {
+        try {
+            this.load();
+            return true;
+        } catch (IOException ignored) {
+            return false;
+        }
+    }
+
+    private void save() throws IOException {
+        try (Writer writer = Files.newBufferedWriter(this.configPath)) {
+            GSON.toJson(this.data, writer);
+        }
+    }
+
+    private Config.Type getDefaults() { return new Config.Type(); }
+
+    public Config.Type getData() { return this.data; }
+
+    public static class Type {
+        int maxStamina = 100;
+        int staminaRecovery = 5;
+        int jumpCost = 10;
+
+        public int getMaxStamina() { return this.maxStamina; }
+        public int getStaminaRecovery() { return this.staminaRecovery; }
+        public int getJumpCost() { return this.jumpCost; }
+    }
+}

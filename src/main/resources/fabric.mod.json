@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "staminup",
+  "version": "${version}",
+  "name": "StaminUp",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/staminup/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "dev.brodino.staminup.client.StaminUpClient"
+    ],
+    "main": [
+      "dev.brodino.staminup.StaminUp"
+    ]
+  },
+  "mixins": [
+    "staminup.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
