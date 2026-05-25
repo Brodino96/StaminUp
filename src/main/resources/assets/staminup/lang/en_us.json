@@ -1,0 +1,13 @@
+{
+  "effect.staminup.faster_stamina_regen": "Vigor",
+  "effect.staminup.faster_stamina_regen.description": "Stamina regenerates faster",
+
+  "effect.staminup.slower_stamina_regen": "Fatigue",
+  "effect.staminup.slower_stamina_regen.description": "Stamina regenerates slower",
+
+  "effect.staminup.higher_stamina_max": "Endurance",
+  "effect.staminup.higher_stamina_max.description": "Increases maximum stamina",
+
+  "effect.staminup.lower_stamina_max": "Exhaustion",
+  "effect.staminup.lower_stamina_max.description": "Reduces maximum stamina"
+}

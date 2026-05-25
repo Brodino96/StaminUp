@@ -20,6 +20,9 @@
   "mixins": [
     "staminup.mixins.json"
   ],
+  "suggests": {
+    "jeed": "*"
+  },
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric-api": "*",
