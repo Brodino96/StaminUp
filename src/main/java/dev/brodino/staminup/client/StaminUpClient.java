@@ -21,17 +21,14 @@ public class StaminUpClient implements ClientModInitializer {
     private void registerEvents() {
         ClientPlayNetworking.registerGlobalReceiver(StaminUpPackets.UPDATE_STAMINA, (c, cpnh, buf, ps) -> {
             stamina = buf.readFloat();
-            StaminUp.LOGGER.info("New stamina {}", stamina);
         });
 
         ClientPlayNetworking.registerGlobalReceiver(StaminUpPackets.UPDATE_JUMP_CONSUMPTION, (c, cpnh, buf, ps) -> {
             jumpConsumption = buf.readFloat();
-            StaminUp.LOGGER.info("New jumpConsumption {}", jumpConsumption);
         });
 
         ClientPlayNetworking.registerGlobalReceiver(StaminUpPackets.UPDATE_MAX_STAMINA, (c, cpnh, buf, ps) -> {
             maxStamina = buf.readFloat();
-            StaminUp.LOGGER.info("New maxStamina {}", maxStamina);
         });
     }
 
