@@ -54,8 +54,7 @@ public class StaminaHandler {
         ServerPlayNetworking.send(player, StaminUpPackets.UPDATE_MAX_STAMINA, buf);
 
         if (playerStamina.getStamina() > maxStamina) {
-            playerStamina.setStamina(maxStamina);
-            ServerPlayNetworking.send(player, StaminUpPackets.UPDATE_STAMINA, buf);
+            updateStamina(player, playerStamina, maxStamina);
         }
     }
 
@@ -77,8 +76,8 @@ public class StaminaHandler {
 
         for (Map.Entry<UUID, PlayerStamina> entry : PLAYERS.entrySet()) {
             PlayerStamina playerStamina = entry.getValue();
-            if (playerStamina.getStamina() == playerStamina.getMaxStamina()) {
-                return;
+            if (playerStamina.getStamina() >= playerStamina.getMaxStamina()) {
+                continue;
             }
 
             float newStamina = Math.min(playerStamina.getStamina() + playerStamina.getRegen(), playerStamina.getMaxStamina());
