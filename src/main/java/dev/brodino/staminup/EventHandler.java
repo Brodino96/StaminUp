@@ -20,6 +20,10 @@ public class EventHandler {
             StaminUp.SERVER = server;
         });
 
+        ServerLifecycleEvents.SERVER_STOPPED.register(server -> {
+            StaminUp.SERVER = null;
+        });
+
         ServerTickEvents.END_SERVER_TICK.register((server -> {
             StaminaHandler.tick();
         }));
