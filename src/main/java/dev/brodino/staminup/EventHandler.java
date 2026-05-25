@@ -3,9 +3,10 @@ package dev.brodino.staminup;
 import dev.brodino.staminup.network.StaminUpPackets;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.network.ServerPlayerEntity;
 
 public class EventHandler {
 
@@ -29,16 +30,19 @@ public class EventHandler {
         }));
 
         ServerPlayConnectionEvents.JOIN.register(((handler, sender, server) -> {
-            var jumpConsumption = PacketByteBufs.create();
-            jumpConsumption.writeFloat(StaminUp.CONFIG.getData().getJumpCost());
-            ServerPlayNetworking.send(handler.getPlayer(), StaminUpPackets.UPDATE_JUMP_CONSUMPTION, jumpConsumption);
+            sendPacketsOnJoin(handler.getPlayer());
+        }));
 
-            var maxStamina = PacketByteBufs.create();
-            maxStamina.writeFloat(StaminUp.CONFIG.getData().getMaxStamina());
-            ServerPlayNetworking.send(handler.getPlayer(), StaminUpPackets.UPDATE_STAMINA, maxStamina);
-            ServerPlayNetworking.send(handler.getPlayer(), StaminUpPackets.UPDATE_MAX_STAMINA, maxStamina);
         ServerPlayConnectionEvents.DISCONNECT.register(((handler, server) -> {
             StaminaHandler.removePlayer(handler.getPlayer().getUuid());
         }));
+    }
+
+    private static void sendPacketsOnJoin(ServerPlayerEntity player) {
+        PacketByteBuf maxStamina = StaminaHandler.getBuf(StaminUp.CONFIG.getData().getMaxStamina());
+        PacketByteBuf jumpConsumption = StaminaHandler.getBuf(StaminUp.CONFIG.getData().getJumpCost());
+        ServerPlayNetworking.send(player, StaminUpPackets.UPDATE_JUMP_CONSUMPTION, jumpConsumption);
+        ServerPlayNetworking.send(player, StaminUpPackets.UPDATE_MAX_STAMINA, maxStamina);
+        ServerPlayNetworking.send(player, StaminUpPackets.UPDATE_STAMINA, maxStamina);
     }
 }

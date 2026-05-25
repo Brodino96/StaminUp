@@ -112,7 +112,7 @@ public class StaminaHandler {
 
     }
 
-    private static PacketByteBuf getBuf(float value) {
+    public static PacketByteBuf getBuf(float value) {
         var buf = PacketByteBufs.create();
         buf.writeFloat(value);
         return buf;
