@@ -43,6 +43,8 @@ public class Config {
             if (data == null) {
                 this.data = this.getDefaults();
                 this.save();
+            } else {
+                this.data.validate();
             }
         }
     }
@@ -68,11 +70,18 @@ public class Config {
 
     public static class Type {
         float maxStamina = 100;
-        float staminaRecovery = 5;
+        float staminaRecovery = 2;
         float jumpCost = 10;
 
         public float getMaxStamina() { return this.maxStamina; }
         public float getStaminaRecovery() { return this.staminaRecovery; }
         public float getJumpCost() { return this.jumpCost; }
+
+        public void validate() {
+            if (this.maxStamina <= 0) { this.maxStamina = 100; }
+            if (this.staminaRecovery <= 0) { this.staminaRecovery = 2; }
+            if (this.jumpCost <= 0) { this.jumpCost = 10; }
+            if (this.jumpCost > this.maxStamina) { this.jumpCost = this.maxStamina; }
+        }
     }
 }
