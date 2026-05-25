@@ -24,9 +24,7 @@ public class StaminaHandler {
         ));
     }
 
-    public static void removePlayer(UUID uuid) {
-        PLAYERS.remove(uuid);
-    }
+    public static void removePlayer(UUID uuid) { PLAYERS.remove(uuid); }
 
     public static boolean tryJump(ServerPlayerEntity player) {
         PlayerStamina playerStamina = getPlayerStamina(player.getUuid());
@@ -40,10 +38,11 @@ public class StaminaHandler {
     }
 
     private static void updateStamina(ServerPlayerEntity player, PlayerStamina playerStamina, float newStamina) {
+        if (newStamina > playerStamina.getMaxStamina()) {
+            return;
+        }
         playerStamina.setStamina(newStamina);
-        var buf = PacketByteBufs.create();
-        buf.writeFloat(newStamina);
-        ServerPlayNetworking.send(player, StaminUpPackets.UPDATE_STAMINA, buf);
+        ServerPlayNetworking.send(player, StaminUpPackets.UPDATE_STAMINA, getBuf(newStamina));
     }
 
     public static void resetMaxStamina(ServerPlayerEntity player) { updateMaxStamina(player, StaminUp.CONFIG.getData().getMaxStamina()); }
@@ -51,8 +50,7 @@ public class StaminaHandler {
         PlayerStamina playerStamina = getPlayerStamina(player.getUuid());
         playerStamina.setMaxStamina(maxStamina);
 
-        var buf = getBuf(maxStamina);
-        ServerPlayNetworking.send(player, StaminUpPackets.UPDATE_MAX_STAMINA, buf);
+        ServerPlayNetworking.send(player, StaminUpPackets.UPDATE_MAX_STAMINA, getBuf(maxStamina));
 
         if (playerStamina.getStamina() > maxStamina) {
             updateStamina(player, playerStamina, maxStamina);
@@ -63,6 +61,7 @@ public class StaminaHandler {
     public static void updateStaminaRegen(ServerPlayerEntity player, float regen) {
         PlayerStamina playerStamina = getPlayerStamina(player.getUuid());
         playerStamina.setRegen(regen);
+        // Doesn't require client sync since packets are sent on regen
     }
 
     public static void tick() {
