@@ -32,7 +32,12 @@ public class StaminUpClient implements ClientModInitializer {
         });
     }
 
-    public static boolean canJump() {
-        return stamina >= jumpConsumption;
+    public static boolean tryJump() {
+        if (stamina < jumpConsumption) {
+            return false;
+        }
+
+        stamina = Math.max(0, StaminUpClient.stamina - StaminUpClient.jumpConsumption);
+        return true;
     }
 }

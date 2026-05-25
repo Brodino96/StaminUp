@@ -1,6 +1,5 @@
 package dev.brodino.staminup.effects;
 
-import dev.brodino.staminup.StaminUp;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 
