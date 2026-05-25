@@ -20,7 +20,7 @@ public class StaminaHandler {
         return PLAYERS.computeIfAbsent(uuid, k -> new PlayerStamina(
             StaminUp.CONFIG.getData().getMaxStamina(),
             StaminUp.CONFIG.getData().getMaxStamina(),
-            StaminUp.CONFIG.getData().getStaminaRecovery()
+            StaminUp.CONFIG.getData().getStaminaRegen()
         ));
     }
 
