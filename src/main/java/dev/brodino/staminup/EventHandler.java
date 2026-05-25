@@ -37,6 +37,8 @@ public class EventHandler {
             maxStamina.writeFloat(StaminUp.CONFIG.getData().getMaxStamina());
             ServerPlayNetworking.send(handler.getPlayer(), StaminUpPackets.UPDATE_STAMINA, maxStamina);
             ServerPlayNetworking.send(handler.getPlayer(), StaminUpPackets.UPDATE_MAX_STAMINA, maxStamina);
+        ServerPlayConnectionEvents.DISCONNECT.register(((handler, server) -> {
+            StaminaHandler.removePlayer(handler.getPlayer().getUuid());
         }));
     }
 }

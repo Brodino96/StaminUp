@@ -24,6 +24,10 @@ public class StaminaHandler {
         ));
     }
 
+    public static void removePlayer(UUID uuid) {
+        PLAYERS.remove(uuid);
+    }
+
     public static boolean tryJump(ServerPlayerEntity player) {
         PlayerStamina playerStamina = getPlayerStamina(player.getUuid());
 
