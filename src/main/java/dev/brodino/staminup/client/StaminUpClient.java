@@ -4,6 +4,7 @@ import dev.brodino.staminup.StaminUp;
 import dev.brodino.staminup.network.StaminUpPackets;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.minecraft.client.network.ClientPlayerEntity;
 
 public class StaminUpClient implements ClientModInitializer {
 
@@ -32,7 +33,11 @@ public class StaminUpClient implements ClientModInitializer {
         });
     }
 
-    public static boolean tryJump() {
+    public static boolean tryJump(ClientPlayerEntity player) {
+        if (player.isCreative() || player.isSpectator()) {
+            return true;
+        }
+
         if (stamina < jumpConsumption) {
             return false;
         }

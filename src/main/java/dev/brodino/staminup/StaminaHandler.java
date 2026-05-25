@@ -27,6 +27,10 @@ public class StaminaHandler {
     public static void removePlayer(UUID uuid) { PLAYERS.remove(uuid); }
 
     public static boolean tryJump(ServerPlayerEntity player) {
+        if (player.isCreative() || player.isSpectator()) {
+            return true;
+        }
+
         PlayerStamina playerStamina = getPlayerStamina(player.getUuid());
 
         if (playerStamina.getStamina() < StaminUp.CONFIG.getData().getJumpCost()) {

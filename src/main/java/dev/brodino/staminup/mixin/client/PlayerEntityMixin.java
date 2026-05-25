@@ -16,11 +16,11 @@ public class PlayerEntityMixin {
 
     @Inject(method = "jump", at = @At("HEAD"), cancellable = true)
     public void jump(CallbackInfo ci) {
-        if (!((Object) this instanceof ClientPlayerEntity)) {
+        if (!((Object) this instanceof ClientPlayerEntity player)) {
             return;
         }
 
-        if (!StaminUpClient.tryJump()) {
+        if (!StaminUpClient.tryJump(player)) {
             ci.cancel();
             return;
         }
