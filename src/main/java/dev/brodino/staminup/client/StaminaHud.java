@@ -1,23 +1,21 @@
 package dev.brodino.staminup.client;
 
+import dev.brodino.staminup.StaminUp;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Identifier;
+
+import com.mojang.blaze3d.systems.RenderSystem;
 
 public class StaminaHud {
 
-    // Total height of the HUD group:
-    // hotbar [22] | xp bar [7] | status rows [10]
-    private static final int BAR_HEIGHT = 29;
-    private static final int BAR_WIDTH = 3;
-    // Gap between the right edge of the hotbar and the stamina bar
-    private static final int BAR_GAP = 5;
-    // The hotbar extends 91px to the right of the screen center
-    private static final int HOTBAR_HALF_WIDTH = 91;
+    private static final int ICON_SIZE = 8;
+    private static final int ICON_COUNT = 15;
 
-    private static final int COLOR_BACKGROUND = 0xAA888888;
-    private static final int COLOR_FILL = 0xFFFFFFFF;
+    private static final int ICON_BOTTOM_OFFSET = 37;
 
     public static void register() { HudRenderCallback.EVENT.register(StaminaHud::render); }
 
@@ -28,29 +26,30 @@ public class StaminaHud {
         }
 
         MinecraftClient client = MinecraftClient.getInstance();
-        if (client.options.hudHidden) {
+        ClientPlayerEntity player = client.player;
+        if (player == null || client.options.hudHidden || player.isCreative() || player.isSpectator()) {
             return;
         }
+
+        float stamina = Math.max(0f, Math.min(StaminUpClient.stamina, maxStamina));
+        float ratio = stamina / maxStamina;
+
+        // Map ratio [0, 1] to icon index [1, 27]
+        int iconIndex = Math.round(ratio * (ICON_COUNT - 1)) + 1;
+        iconIndex = Math.max(1, Math.min(ICON_COUNT, iconIndex));
+
+        Identifier texture = new Identifier(StaminUp.MOD_ID, "gui/icons/indicator_" + iconIndex + ".png");
 
         int screenW = client.getWindow().getScaledWidth();
         int screenH = client.getWindow().getScaledHeight();
 
-        int barX = (screenW / 2) + HOTBAR_HALF_WIDTH + BAR_GAP;
-        int barY = screenH - BAR_HEIGHT;
+        int x = (screenW / 2) - (ICON_SIZE / 2);
+        int y = screenH - ICON_BOTTOM_OFFSET - ICON_SIZE;
 
-        DrawableHelper.fill(matrices, barX, barY, barX + BAR_WIDTH, barY + BAR_HEIGHT, COLOR_BACKGROUND);
-
-        float stamina = Math.max(0f, Math.min(StaminUpClient.stamina, maxStamina));
-        int fillHeight = Math.round(BAR_HEIGHT * stamina / maxStamina);
-        if (fillHeight <= 0) {
-            return;
-        }
-        DrawableHelper.fill(
-            matrices, barX,
-            barY + (BAR_HEIGHT - fillHeight),
-            barX + BAR_WIDTH,
-            barY + BAR_HEIGHT,
-            COLOR_FILL
-        );
+        RenderSystem.setShaderTexture(0, texture);
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
+        DrawableHelper.drawTexture(matrices, x, y, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
+        RenderSystem.disableBlend();
     }
 }
