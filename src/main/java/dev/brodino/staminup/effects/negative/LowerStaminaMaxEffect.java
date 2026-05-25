@@ -17,7 +17,7 @@ public class LowerStaminaMaxEffect extends StaminaModifyingEffect {
     @Override
     public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
         if (!(entity instanceof ServerPlayerEntity player)) { return; }
-        StaminaHandler.updateMaxStamina(player, StaminUp.CONFIG.getData().getMaxStamina() / this.getModifier(amplifier));
+        StaminaHandler.updateMaxStamina(player, StaminUp.CONFIG.getData().getMaxStamina() * this.getNegativeModifier(amplifier));
     }
 
     @Override

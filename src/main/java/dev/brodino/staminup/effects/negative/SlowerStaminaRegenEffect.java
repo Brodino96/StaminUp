@@ -17,7 +17,7 @@ public class SlowerStaminaRegenEffect extends StaminaModifyingEffect {
     @Override
     public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
         if (!(entity instanceof ServerPlayerEntity player)) { return; }
-        StaminaHandler.updateStaminaRegen(player, StaminUp.CONFIG.getData().getStaminaRegen() / this.getModifier(amplifier));
+        StaminaHandler.updateStaminaRegen(player, StaminUp.CONFIG.getData().getStaminaRegen() * this.getNegativeModifier(amplifier));
     }
 
     @Override
