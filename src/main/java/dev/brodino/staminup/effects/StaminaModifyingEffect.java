@@ -1,0 +1,13 @@
+package dev.brodino.staminup.effects;
+
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectCategory;
+
+public abstract class StaminaModifyingEffect extends StatusEffect {
+
+    public StaminaModifyingEffect(StatusEffectCategory statusEffectCategory, int color) {
+        super(statusEffectCategory, color);
+    }
+
+    public float getModifier(int amplifier) { return 1.0f + 0.1f * (amplifier + 1); }
+}

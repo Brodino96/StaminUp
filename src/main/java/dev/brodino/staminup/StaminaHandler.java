@@ -46,6 +46,7 @@ public class StaminaHandler {
         ServerPlayNetworking.send(player, StaminUpPackets.UPDATE_STAMINA, buf);
     }
 
+    public static void resetMaxStamina(ServerPlayerEntity player) { updateMaxStamina(player, StaminUp.CONFIG.getData().getMaxStamina()); }
     public static void updateMaxStamina(ServerPlayerEntity player, float maxStamina) {
         PlayerStamina playerStamina = getPlayerStamina(player.getUuid());
         playerStamina.setMaxStamina(maxStamina);
@@ -58,6 +59,7 @@ public class StaminaHandler {
         }
     }
 
+    public static void resetStaminaRegen(ServerPlayerEntity player) { updateStaminaRegen(player, StaminUp.CONFIG.getData().getStaminaRegen()); }
     public static void updateStaminaRegen(ServerPlayerEntity player, float regen) {
         PlayerStamina playerStamina = getPlayerStamina(player.getUuid());
         playerStamina.setRegen(regen);
