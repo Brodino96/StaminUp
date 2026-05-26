@@ -9,5 +9,8 @@
   "effect.staminup.higher_stamina_max.description": "Increases maximum stamina",
 
   "effect.staminup.lower_stamina_max": "Exhaustion",
-  "effect.staminup.lower_stamina_max.description": "Reduces maximum stamina"
+  "effect.staminup.lower_stamina_max.description": "Reduces maximum stamina",
+
+  "effect.staminup.instant_stamina": "Instant Stamina",
+  "effect.staminup.instant_stamina.description": "Gives you and instant dose of stamina"
 }
