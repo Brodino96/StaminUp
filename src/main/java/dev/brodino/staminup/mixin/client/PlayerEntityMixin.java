@@ -1,6 +1,6 @@
 package dev.brodino.staminup.mixin.client;
 
-import dev.brodino.staminup.client.StaminUpClient;
+import dev.brodino.staminup.client.StaminaHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -16,11 +16,11 @@ public class PlayerEntityMixin {
 
     @Inject(method = "jump", at = @At("HEAD"), cancellable = true)
     public void jump(CallbackInfo ci) {
-        if (!((Object) this instanceof ClientPlayerEntity player)) {
+        if (!((Object) this instanceof ClientPlayerEntity)) {
             return;
         }
 
-        if (!StaminUpClient.tryJump(player)) {
+        if (!StaminaHandler.tryJump()) {
             ci.cancel();
             return;
         }

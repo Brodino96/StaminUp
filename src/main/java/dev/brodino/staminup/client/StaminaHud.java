@@ -1,6 +1,9 @@
 package dev.brodino.staminup.client;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import dev.brodino.staminup.StaminUp;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
@@ -8,8 +11,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-
+@Environment(EnvType.CLIENT)
 public class StaminaHud {
 
     private static final int ICON_SIZE = 8;
@@ -19,10 +21,8 @@ public class StaminaHud {
 
     private static final String ICON_PATH = "textures/hud/status/";
 
-    public static void register() { HudRenderCallback.EVENT.register(StaminaHud::render); }
-
-    private static void render(MatrixStack matrices, float tickDelta) {
-        float maxStamina = StaminUpClient.maxStamina;
+    public static void render(MatrixStack matrices, float tickDelta) {
+        float maxStamina = StaminaHandler.getMaxStamina();
         if (maxStamina <= 0) {
             return;
         }
@@ -33,7 +33,7 @@ public class StaminaHud {
             return;
         }
 
-        float stamina = Math.max(0f, Math.min(StaminUpClient.stamina, maxStamina));
+        float stamina = Math.max(0f, Math.min(StaminaHandler.getStamina(), maxStamina));
         float ratio = stamina / maxStamina;
 
         int iconIndex = Math.round(ratio * (ICON_COUNT - 1)) + 1;
