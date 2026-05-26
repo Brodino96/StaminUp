@@ -12,6 +12,7 @@ public class StaminaHandler {
     private static float baseMaxStamina = 0f;
     private static float baseStaminaRegen = 0f;
     private static float baseJumpCost = 0f;
+    private static float movementCheck = 0f;
 
     // Player values
     private static float maxStamina = 0f;
@@ -27,6 +28,9 @@ public class StaminaHandler {
 
     public static float getBaseJumpCost() { return baseJumpCost; }
     public static void setBaseJumpCost(float value) { baseJumpCost = value; }
+
+    public static boolean getMovementCheck() { return movementCheck > 0f; }
+    public static void setMovementCheck(float value) { movementCheck = value; }
 
     public static float getMaxStamina() { return maxStamina; }
     public static void setMaxStamina(float value) {

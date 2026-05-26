@@ -25,6 +25,10 @@ public class PlayerEntityMixin {
             return;
         }
 
+        if (StaminaHandler.getMovementCheck() && !player.isSprinting()) {
+            return;
+        }
+
         if (!StaminaHandler.tryJump()) {
             ci.cancel();
             return;

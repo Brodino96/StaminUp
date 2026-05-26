@@ -53,6 +53,11 @@ public class ClientEventHandler {
             client.execute(() -> StaminaHandler.fillStamina(percentage));
         });
 
+        ClientPlayNetworking.registerGlobalReceiver(StaminUpPackets.MOVEMENT_CHECK, (client, handler, buf, sender) -> {{
+            float movementCheck = buf.readFloat();
+            client.execute(() -> StaminaHandler.setMovementCheck(movementCheck));
+        }});
+
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (client.player == null || client.world == null) { return; }
             if (client.player.isCreative() || client.player.isSpectator()) { return; }

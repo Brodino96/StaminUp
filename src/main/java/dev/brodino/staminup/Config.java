@@ -69,13 +69,16 @@ public class Config {
     public Config.Type getData() { return this.data; }
 
     public static class Type {
-        float maxStamina = 100;
-        float staminaRegen = 2;
-        float jumpCost = 10;
+        private float maxStamina = 100;
+        private float staminaRegen = 2;
+        private float jumpCost = 10;
+        @SuppressWarnings({ "FieldMayBeFinal", "FieldCanBeLocal" }) // I want to kill myself
+        private boolean movementCheck = false;
 
         public float getMaxStamina() { return this.maxStamina; }
         public float getStaminaRegen() { return this.staminaRegen; }
         public float getJumpCost() { return this.jumpCost; }
+        public float getMovementCheck() { return this.movementCheck ? 1f : 0f; }
 
         public void validate() {
             if (this.maxStamina <= 0) { this.maxStamina = 100; }

@@ -39,6 +39,7 @@ public class EventHandler {
         ServerPlayNetworking.send(player, StaminUpPackets.UPDATE_MAX_STAMINA, getBuf(data.getMaxStamina()));
         ServerPlayNetworking.send(player, StaminUpPackets.UPDATE_STAMINA, getBuf(data.getMaxStamina()));
         ServerPlayNetworking.send(player, StaminUpPackets.UPDATE_STAMINA_REGEN, getBuf(data.getStaminaRegen()));
+        ServerPlayNetworking.send(player, StaminUpPackets.MOVEMENT_CHECK, getBuf(data.getMovementCheck()));
     }
 
     public static PacketByteBuf getBuf(float value) {
