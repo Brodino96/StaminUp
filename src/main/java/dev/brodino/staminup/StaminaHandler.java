@@ -41,9 +41,14 @@ public class StaminaHandler {
         return true;
     }
 
+    public static void fillStamina(ServerPlayerEntity player, int percentage) {
+        PlayerStamina playerStamina = getPlayerStamina(player.getUuid());
+        float value = (percentage * playerStamina.getMaxStamina()) / 100;
+        updateStamina(player, playerStamina, value);
+    }
     private static void updateStamina(ServerPlayerEntity player, PlayerStamina playerStamina, float newStamina) {
         if (newStamina > playerStamina.getMaxStamina()) {
-            return;
+            newStamina = playerStamina.getMaxStamina();
         }
         playerStamina.setStamina(newStamina);
         ServerPlayNetworking.send(player, StaminUpPackets.UPDATE_STAMINA, getBuf(newStamina));
