@@ -17,6 +17,8 @@ public class StaminaHud {
 
     private static final int ICON_BOTTOM_OFFSET = 37;
 
+    private static final String ICON_PATH = "textures/hud/status/";
+
     public static void register() { HudRenderCallback.EVENT.register(StaminaHud::render); }
 
     private static void render(MatrixStack matrices, float tickDelta) {
@@ -34,11 +36,8 @@ public class StaminaHud {
         float stamina = Math.max(0f, Math.min(StaminUpClient.stamina, maxStamina));
         float ratio = stamina / maxStamina;
 
-        // Map ratio [0, 1] to icon index [1, 27]
         int iconIndex = Math.round(ratio * (ICON_COUNT - 1)) + 1;
         iconIndex = Math.max(1, Math.min(ICON_COUNT, iconIndex));
-
-        Identifier texture = new Identifier(StaminUp.MOD_ID, "gui/icons/indicator_" + iconIndex + ".png");
 
         int screenW = client.getWindow().getScaledWidth();
         int screenH = client.getWindow().getScaledHeight();
@@ -46,10 +45,14 @@ public class StaminaHud {
         int x = (screenW / 2) - (ICON_SIZE / 2);
         int y = screenH - ICON_BOTTOM_OFFSET - ICON_SIZE;
 
-        RenderSystem.setShaderTexture(0, texture);
+        RenderSystem.setShaderTexture(0, getIcon(iconIndex));
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         DrawableHelper.drawTexture(matrices, x, y, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
         RenderSystem.disableBlend();
+    }
+
+    private static Identifier getIcon(int index) {
+        return new Identifier(StaminUp.MOD_ID, ICON_PATH + index + ".png");
     }
 }
