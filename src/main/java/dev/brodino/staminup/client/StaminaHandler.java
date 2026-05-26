@@ -1,5 +1,6 @@
 package dev.brodino.staminup.client;
 
+import dev.brodino.staminup.StaminUp;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -64,7 +65,7 @@ public class StaminaHandler {
     }
 
     public static void fillStamina(float percentage) {
-        float fill = (percentage / 100f) * maxStamina;
+        float fill = (percentage / 10f) * maxStamina;
         stamina = Math.min(stamina + fill, maxStamina);
     }
 
