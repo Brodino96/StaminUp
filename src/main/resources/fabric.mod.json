@@ -4,8 +4,30 @@
   "version": "${version}",
   "name": "StaminUp",
   "description": "",
-  "authors": [],
-  "contact": {},
+  "authors": [
+    {
+      "name": "Brodino",
+      "contact": {
+        "email": "brodino96@gmail.com",
+        "homepage": "https://brodino.dev",
+        "issues": "https://github.com/Brodino96/StaminUp/issues",
+        "sources": "https://github.com/Brodino96/StaminUp"
+      }
+    }
+  ],
+  "contributors": [
+    {
+      "name": "FapTobi_",
+      "contact": {
+        "curse": "https://www.curseforge.com/members/faptobi_/projects"
+      }
+    }
+  ],
+  "contact": {
+    "sources": "https://github.com/Brodino96/StaminUp",
+    "issues": "https://github.com/Brodino96/StaminUp/issues",
+    "homepage": "https://github.com/Brodino96/StaminUp/blob/main/README.md"
+  },
   "license": "MIT",
   "icon": "assets/staminup/icon.png",
   "environment": "*",
