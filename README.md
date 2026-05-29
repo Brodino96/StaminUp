@@ -1,6 +1,6 @@
 # StaminUp
 
-![banner](staminup_title.png)
+![banner](images/staminup_title.png)
 
 A Minecraft Fabric mod that adds a stamina system to the game.
 Players have a stamina bar that depletes when jumping and regenerates passively over time.
